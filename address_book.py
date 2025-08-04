@@ -21,9 +21,8 @@ class Record:
         self.name = Name(name)
         self.phones = []
 
-    def add_phones(self, *phones):
-        for phone in phones:
-            self.phones.append(Phone(phone))
+    def add_phone(self, phone):
+        self.phones.append(Phone(phone))
 
     def remove_phone(self, phone):
         phone_obj = self.find_phone(phone)
@@ -33,8 +32,9 @@ class Record:
     def edit_phone(self, old_phone, new_phone):
         phone_obj = self.find_phone(old_phone)
         if phone_obj:
+            new_phone_obj = Phone(new_phone)  
             self.phones.remove(phone_obj)
-            self.phones.append(Phone(new_phone))
+            self.phones.append(new_phone_obj)
         else:
             raise ValueError("Old phone number not found")
 
@@ -66,11 +66,12 @@ if __name__ == "__main__":
     book = AddressBook()
 
     john_record = Record("John")
-    john_record.add_phones("1234567890", "5555555555")
+    john_record.add_phone("1234567890")
+    john_record.add_phone("5555555555")
     book.add_record(john_record)
 
     jane_record = Record("Jane")
-    jane_record.add_phones("9876543210")
+    jane_record.add_phone("9876543210")
     book.add_record(jane_record)
 
     print("\nAll contacts:")
